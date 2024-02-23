@@ -16,7 +16,9 @@ spec:
     spec:
       volumes:
       - name: nfs-volume
-        emptyDir: {}
+        hostPath:
+          path: /data-nfs/export/backup # Specify the path on the host
+          type: Directory  # This will create the directory if it does not exist
       containers:
       - name: longhorn-nfs-bck-container
         image: longhornio/nfs-ganesha:latest
