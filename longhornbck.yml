@@ -17,8 +17,8 @@ spec:
       volumes:
       - name: nfs-volume
         hostPath:
-          path: /data-nfs/bck # Specify the path on the host
-          type: Directory  # This will create the directory if it does not exist
+          path: /data-nfs/bck
+          type: Directory 
       containers:
       - name: longhorn-nfs-bck-container
         image: longhornio/nfs-ganesha:latest
@@ -39,7 +39,7 @@ spec:
             add: ["SYS_ADMIN", "DAC_READ_SEARCH"]
         volumeMounts:
         - name: nfs-volume
-          mountPath: "/opt/backupstore"
+          mountPath: /opt/backupstore
         livenessProbe:
           exec:
             command: ["bash", "-c", "grep \"No export entries found\" /var/log/ganesha.log > /dev/null 2>&1 ; [ $? -ne 0 ]"]
