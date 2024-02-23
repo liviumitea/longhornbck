@@ -25,9 +25,9 @@ spec:
         - name: EXPORT_ID
           value: "14"
         - name: EXPORT_PATH
-          value: /opt/backupstore
+          value: /opt
         - name: PSEUDO_PATH
-          value: /opt/backupstore
+          value: /opt
         - name: NFS_DISK_IMAGE_SIZE_MB
           value: "4096"
         command: ["bash", "-c", "chmod 700 /opt/backupstore && /opt/start_nfs.sh | tee /var/log/ganesha.log"]
@@ -37,7 +37,7 @@ spec:
             add: ["SYS_ADMIN", "DAC_READ_SEARCH"]
         volumeMounts:
         - name: nfs-volume
-          mountPath: /opt/backupstore
+          mountPath: /opt
         livenessProbe:
           exec:
             command: ["bash", "-c", "grep \"No export entries found\" /var/log/ganesha.log > /dev/null 2>&1 ; [ $? -ne 0 ]"]
