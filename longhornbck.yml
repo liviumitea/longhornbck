@@ -16,7 +16,9 @@ spec:
     spec:
       volumes:
       - name: nfs-volume
-        emptyDir: {}
+        hostPath:
+          path: /data-nfs/bck
+          type: Directory 
       containers:
       - name: longhorn-nfs-bck-container
         image: longhornio/nfs-ganesha:latest
@@ -25,19 +27,19 @@ spec:
         - name: EXPORT_ID
           value: "14"
         - name: EXPORT_PATH
-          value: /opt
+          value: /opt/backupstore
         - name: PSEUDO_PATH
-          value: /opt
+          value: /opt/backupstore
         - name: NFS_DISK_IMAGE_SIZE_MB
           value: "4096"
-        command: ["bash", "-c", "chmod 700 /opt && /opt/start_nfs.sh | tee /var/log/ganesha.log"]
+        command: ["bash", "-c", "chmod 700 /opt/backupstore && /opt/start_nfs.sh | tee /var/log/ganesha.log"]
         securityContext:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN", "DAC_READ_SEARCH"]
         volumeMounts:
         - name: nfs-volume
-          mountPath: /opt
+          mountPath: /opt/backupstore
         livenessProbe:
           exec:
             command: ["bash", "-c", "grep \"No export entries found\" /var/log/ganesha.log > /dev/null 2>&1 ; [ $? -ne 0 ]"]
