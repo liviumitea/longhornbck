@@ -16,9 +16,7 @@ spec:
     spec:
       volumes:
       - name: nfs-volume
-        hostPath:
-          path: /data-nfs/bck
-          type: Directory 
+        emptyDir: {}
       containers:
       - name: longhorn-nfs-bck-container
         image: longhornio/nfs-ganesha:latest
